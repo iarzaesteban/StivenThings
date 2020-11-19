@@ -1,0 +1,20 @@
+Apunteess
+---------
+http://www.grch.com.ar/docs/bdd/apuntes/
+
+Videos:
+-------
+
+https://www.youtube.com/watch?v=O6S71on2Guk&feature=emb_logo ------ implementacion de base de datos relacional(26min)
+https://www.youtube.com/watch?v=dayfMX0sHG0&feature=emb_logo ----   programacion de triggers en firebird/ interbase(27min)
+https://www.youtube.com/watch?v=Pn4pIpmsQwI&feature=emb_logo -----  Base de datos no sql(17.3)
+https://www.youtube.com/watch?v=K-sle4oOELE&feature=emb_logo ------ Base de datos no sql (clave valor)(16min)
+https://www.youtube.com/watch?v=U6Ly4iR8tNg&feature=emb_logo ------ Java generics, clases genericas en java(15min)
+https://www.youtube.com/watch?v=QcaEA_Ex9FY&feature=emb_logo ------ reflexion java , clase uso de clase (20min)
+https://www.youtube.com/watch?v=i_PDI6qcZoY&feature=emb_logo ------ reflexion de java, inyeccion simple, anotacion (19min)
+https://www.youtube.com/watch?v=kIZg_sGx2c4&feature=emb_logo ------ introduccion a las bases de datos distribuidas(35min)
+https://www.youtube.com/watch?v=SgNG6TgiJ4I&feature=emb_logo ------ Control de Concurrencia en Bases de Datos Centralizadas y Distribuidas(1hora)
+https://www.youtube.com/watch?v=4Zd82yTEfSU&feature=emb_logo ------ Optimizacion de Queries / Consultas en Base de Datos(35min)
+
+
+

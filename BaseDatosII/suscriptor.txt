@@ -1,0 +1,12 @@
+cluster name=slony_1;
+
+node 1 admin conninfo = 'dbname= ReplicacionPrueba host=192.168.1.60 user=postgres password=xxxxxx';
+node 2 admin conninfo = 'dbname= ReplicacionPrueba host=192.168.1.40 user=postgres password=xxxxxx';
+
+subscribe set(id=1,provider=1,receiver=2,forward=yes);
+
+WAIT FOR EVENT (
+         ORIGIN = ALL,
+         CONFIRMED = ALL,
+         WAIT ON = 1
+       );
