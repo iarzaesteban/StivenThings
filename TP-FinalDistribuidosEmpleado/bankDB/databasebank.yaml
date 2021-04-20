@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - ./bankDB:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=Banckington
+        ports:
+            -  3309:3306 
+
+    wordpress:
+        image: wordpress:latest
+        links:
+            - mysql:mysql    
+        environment:
+            - WORDPRESS_DB_HOST=mysql
+            - WORDPRESS_DB_USER=root
+            - WORDPRESS_DB_PASSWORD=root
+            - WORDPRESS_DB_NAME=Banckington
+        ports:
+            - 8080:80
+
+
+

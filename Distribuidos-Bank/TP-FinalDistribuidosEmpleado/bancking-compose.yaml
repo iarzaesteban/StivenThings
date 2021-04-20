@@ -1,0 +1,10 @@
+version: '3'
+services: 
+       
+
+    bancking-container:
+        image: banckington-image:latest
+        container_name: bancking-app
+        ports:
+            - 9000:9000
+    

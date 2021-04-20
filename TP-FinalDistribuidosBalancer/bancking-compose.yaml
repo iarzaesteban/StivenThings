@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - ./bankDB:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=Banckington
+        networks:
+            red-db:
+                ipv4_address: 192.168.0.5
+        ports:
+            -  3309:3306 
+
+    wordpress:
+        image: wordpress:latest
+        links:
+            - mysql:mysql    
+        environment:
+            - WORDPRESS_DB_HOST=mysql
+            - WORDPRESS_DB_USER=root
+            - WORDPRESS_DB_PASSWORD=root
+            - WORDPRESS_DB_NAME=Banckington
+        ports:
+            - 8080:80
+
+    bancking-container:
+        image: server-balancer:latest 
+        container_name: server-balancer-1
+        depends_on:
+            - mysql
+        ports:
+            - 9000: 9000
+networks:
+    red-db:
+        driver: macvlan
+        driver_opts: 
+            parent: eth0
+        ipam:
+            config:
+                - subnet: "192.168.0.0/24"
+                  gateway: "192.168.0.1"

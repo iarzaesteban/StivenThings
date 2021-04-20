@@ -1,0 +1,12 @@
+version: '3'
+services: 
+    
+    bancking-container:
+        image: server-balancer:latest 
+        container_name: server-balancer-1
+        ports:
+            - 9000:9000
+
+
+
+
