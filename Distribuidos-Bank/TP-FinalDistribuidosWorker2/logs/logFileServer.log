@@ -1,0 +1,47 @@
+328  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+327299 [/127.0.0.1] ERROR Servidor.RabbitTail - Host desconocido (rabbitmq)
+309  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+127078 [/127.0.0.1] ERROR Servidor.RabbitTail - Host desconocido (rabbitmq)
+407  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+39611 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+39664 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+489  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+38532 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Connection reset)
+38597 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+331  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+314  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+190944 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+190944 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+316  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+47003 [/127.0.0.1] ERROR Servidor.RabbitTail - Wrong scheme in AMQP URI: ampq
+281  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+34449 [/127.0.0.1] ERROR Servidor.RabbitTail - Wrong scheme in AMQP URI: ampq
+267  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+32499 [/127.0.0.1] ERROR Servidor.RabbitTail - Wrong scheme in AMQP URI: ampq
+298  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+25935 [/127.0.0.1] ERROR Servidor.RabbitTail - Wrong scheme in AMQP URI: ampq
+390  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+31508 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+31508 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+312  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+28411 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+28411 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+327  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+26953 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Connection reset)
+26953 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+550  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+23785 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+23785 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+299  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+76805 [AMQP Connection 0:0:0:0:0:0:0:1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+76837 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+76837 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+250  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+35063 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+35094 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+35094 [AMQP Connection 0:0:0:0:0:0:0:1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+437  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888
+50252 [AMQP Connection 0:0:0:0:0:0:0:1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+50252 [/127.0.0.1] ERROR Servidor.RabbitTail - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.
+50252 [AMQP Connection 127.0.0.1:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Socket closed)
+265  [main] INFO  Servidor.ServerBalancer -  Servidor corriendo en el puerto 8888

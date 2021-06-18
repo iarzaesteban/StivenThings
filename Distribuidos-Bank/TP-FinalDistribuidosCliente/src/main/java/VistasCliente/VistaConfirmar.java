@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -29,23 +31,23 @@ public class VistaConfirmar extends JPanel implements ActionListener ,WindowList
 	
 	JFrame frame;
 	JFrame frame1;
-	JTextField nroCuenta;
+	JTextField nroCbu;
 	JTextField monto;
 	Controlador controlador;
 	
 	
 	
 
-	public VistaConfirmar(Controlador controlador, JFrame frame1,JTextField nroCuenta, JTextField monto){
+	public VistaConfirmar(Controlador controlador, JFrame frame1,JTextField nroCbu, JTextField monto){
 		this.controlador = controlador;
-		frame = new JFrame ("Bancking - Iniciar sesion");
+		frame = new JFrame ("Bancking - Validar transaccion");
 	    frame.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 	    int x = (int) ((dimension.getWidth() - frame.getWidth())/5);
 	    int y = (int) ((dimension.getHeight() - frame.getHeight())/5);
 	    frame.setLocation(x, y);
 	    this.frame1 = frame1;
-	    this.nroCuenta = nroCuenta;
+	    this.nroCbu = nroCbu;
 	    this.monto = monto;
 	    this.frame.addWindowListener(this);
 		 
@@ -84,32 +86,35 @@ public class VistaConfirmar extends JPanel implements ActionListener ,WindowList
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		 if (arg0.getSource() == this.btnAceptar) {
-			 this.frame.setVisible(false);
-			 if(!passwdorOK(this.password).isEmpty()) {
-				 String rta = this.controlador.confirmarPassword(passwdorOK(this.password));
-				 if(rta.equals("OK")) {
-					 this.frame.setVisible(false);
-					 //aca debo mandar a subir a la cola
-					 String rTransaccion = this.controlador.realizarTransferencia(nroCuenta.getText(),monto.getText());
-					 if(rTransaccion.equals("OK")) {
-						 JOptionPane.showMessageDialog(null, "La transaccion se ha realizado con exito");
-						 frame1.setVisible(false);
-						 new VistaTransferencia(controlador);
-					 }else {
-						 JOptionPane.showMessageDialog(null, rTransaccion);
-					 }
+		if (arg0.getSource() == this.btnAceptar) {
+			this.frame.setVisible(false);
+			if(!passwdorOK(this.password).isEmpty()) {
+				String rta = this.controlador.confirmarPassword(passwdorOK(this.password));
+				if(rta.equals("OK")) {
+					this.frame.setVisible(false);
+					//SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss ");
+					Long date = (System.currentTimeMillis()+120000);
+					String rTransaccion = this.controlador.realizarTransferencia(nroCbu.getText(),
+							monto.getText(),"transferencia",date);
+					
+					if(rTransaccion.equals("OK")) {
+						JOptionPane.showMessageDialog(null, "Se ha registrado la transaccion correctamente, en algunos minutos sera procesada");
+						frame1.setVisible(false);
+						new VistaTransferencia(controlador);
+					}else {
+						JOptionPane.showMessageDialog(null, rTransaccion);
+					}
 					 
-				 }else {
-					 JOptionPane.showMessageDialog(null, rta);
-					 new VistaConfirmar(controlador,this.frame,this.nroCuenta,this.monto);
-				 }
-			 }else {
-				 JOptionPane.showMessageDialog(null, "Contraseña incorrecta!");
-				 this.frame.setVisible(false);
-				 new VistaConfirmar(controlador,this.frame,this.nroCuenta,this.monto);
-			 }
-		 }
+				}else {
+					JOptionPane.showMessageDialog(null, rta);
+					new VistaConfirmar(controlador,this.frame,this.nroCbu,this.monto);
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Contraseña incorrecta!");
+				this.frame.setVisible(false);
+				new VistaConfirmar(controlador,this.frame,this.nroCbu,this.monto);
+			}
+		}
 		 
 		 if (arg0.getSource() == this.btnCancelar) {
 			 this.frame.setVisible(false);

@@ -2,6 +2,8 @@ package Client;
 
 import java.io.BufferedReader;
 
+
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,12 +27,11 @@ import Servidor.Transaccion;
 public class Cliente {
 	
 	private String serverIp;
-	private String serverIpBak;
 	private Integer serverPort;
 	private boolean onBackupSv = false;
 	private final int MAX_ATTEMPS = 3;
 	
-	static Logger log = LoggerFactory.getLogger(Cliente.class);
+	private final Logger log = LoggerFactory.getLogger(Cliente.class);
 	
 	private Socket s;
 	private Operaciones op;
@@ -42,19 +43,8 @@ public class Cliente {
 	
 	public Cliente() {
 		readConfigFile();
-		MDC.put("log.name", Cliente.class.getSimpleName().toString());
-		
-	}
-	
-	
-
-	public String getUsuario() {
-		return op.getNombreUsuario();
+		log.info("Se ha cargado el archivo de configuracion del cliente");
 	}	
-	
-	
-	
-	
 	
 	private void readConfigFile() {
 		Gson gson = new Gson();
@@ -62,24 +52,27 @@ public class Cliente {
 		try {
 			config = gson.fromJson(new FileReader("clienteConfig.json"), Map.class);
 			Map server = (Map) config.get("server");
-			//System.out.println("server ip" + server.get("ip").toString());
 			this.serverIp = server.get("ip").toString();
-			this.serverIpBak = server.get("ipBak").toString();
 			this.serverPort = Integer.valueOf(server.get("port").toString());
 		} catch (IOException e) {
-			log.info("Error Archivo Config!");
+			log.info("Error al intentar leer archivo de configuracion");
 		} 
 	}
+	
+	
+	public String getUsuario() {
+		return op.getNombreUsuario();
+	}
 
-
+	//cierra la conexion con servidor
 	public void cerrarSession() {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);
+			this.s = new Socket (this.serverIp, this.serverPort);
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
-			Gson oG = new Gson();
+			this.og = new Gson();
 			this.op.setTipo("00");
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			this.s.close();
@@ -94,9 +87,9 @@ public class Cliente {
 	public void closeConeccion() {
 		try {
 			
-			Gson oG = new Gson();
+			this.og = new Gson();
 			this.op.setTipo("0");
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			this.s.close();
@@ -114,7 +107,8 @@ public class Cliente {
 	// al validar, 1ero me conecto al server y luego le mando los dato  y obtengo respuesta
 	public String validarCliente(String user, String psw) {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);//establecemos coneccion
+			this.s = new Socket (this.serverIp,  this.serverPort);//establecemos coneccion
+			
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
 			this.og = new Gson();
@@ -123,27 +117,27 @@ public class Cliente {
 			op.setTipo("2");
 			op.setUsuario(user);
 			op.setPsw(psw);
+			System.out.println("antes " +json);
 			this.json = og.toJson(op);
 			this.canalSalida.println(json);
 			this.canalSalida.flush();
-			
 			json = canalEntrada.readLine();
-			
+			System.out.println(json);
 	        op = og.fromJson(json, Operaciones.class);
 			
 	        if(op.getNombreUsuario().equals("Ya Loggeado")){
-	        	s.close();
+	        	this.s.close();
 				return "Usuario ya Loggeado";
 			}else {
 				if(op.getNombreUsuario().equals("Datos Invalidos")){
-					s.close();
+					this.s.close();
 					return "Usuario o Contraseña Invalidos";
 				}else {
 					if(op.getNombreUsuario().equals("Error")){
-						s.close();
+						this.s.close();
 						return "Error! Intentalo en algunos minutos";
 					}else {
-						s.close();
+						this.s.close();
 						return "OK";
 					}
 				}
@@ -159,17 +153,21 @@ public class Cliente {
 		
 		
 	
-	public String validarTransaccion(String nroCta, String monto) {
+	public String validarTransaccion(String cbu, String monto,String tTransaccion) {
 		try {
-			Gson oG = new Gson();
+			this.s = new Socket (this.serverIp, this.serverPort);
+			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
+			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
+			this.og = new Gson();
 			this.op.setTipo("3");
-			Transaccion T = new  Transaccion(op.getUsuario(),nroCta,monto,"1"); //transferencia
+			Transaccion T = new  Transaccion(cbu,monto,tTransaccion); //transferencia
 			op.agregarTransaccion(T);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			
 			json = canalEntrada.readLine();
+			this.s.close();
 			return json;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -182,17 +180,18 @@ public class Cliente {
 	
 	public int getSaldo() {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);//establecemos coneccion
+			this.s = new Socket (this.serverIp,  this.serverPort);//establecemos coneccion
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
 			
-			Gson oG = new Gson();
+			this.og = new Gson();
 			this.op.setTipo("4");
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.flush();
 			canalSalida.println(json);
 
 			json = canalEntrada.readLine();
+			this.s.close();
 			return Integer.valueOf(json);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -200,17 +199,23 @@ public class Cliente {
        return (Integer) null;
 	}
 
-	public String realizarTranferencia(String nroCta, String monto) {
+	//Realiza la transferencia validando siempre que tenga saldo y la cuenta destino sea correcta
+	public String realizarTranferencia(String nroCbu, String monto,String tTransaccion,Long fecha) {
 		try {
-			Gson oG = new Gson();
+			this.s = new Socket (this.serverIp, this.serverPort);
+			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
+			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
+			
+			this.og = new Gson();
 			this.op.setTipo("5");
-			Transaccion T = new  Transaccion(op.getUsuario(),nroCta,monto,"1"); //transferencia
+			Transaccion T = new  Transaccion(op.getUsuario(),nroCbu,monto,tTransaccion,fecha); //transferencia
 			op.agregarTransaccion(T);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			
 			json = canalEntrada.readLine();
+			this.s.close();
 			return json;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -221,23 +226,23 @@ public class Cliente {
 	
 	
 	
-	
-public String validarUsuario(String usuario) {//valida q el usuario a registrar sea correcto
+	public String validarUsuario(String usuario) {//valida q el usuario a registrar sea correcto
 		
-		Gson oG = new Gson();
+		this.og = new Gson();
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);
+			this.s = new Socket (this.serverIp,  this.serverPort);
 			BufferedReader canalIn = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			PrintWriter canalOut = new PrintWriter (s.getOutputStream(), true);
+			
 			this.op = new Operaciones();
 			op.setTipo("6");
 			op.setUsuario(usuario);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalOut.println(json);
 			canalOut.flush();
 			
 			json = canalIn.readLine();//leo la rta
-			
+			this.s.close();
 			return json;
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -249,20 +254,22 @@ public String validarUsuario(String usuario) {//valida q el usuario a registrar 
 
 
 
-
+	//valida que el codigo ingresado sea correcto para poder generar el nuevo user con su pass elegida
 	public String validarCodigoUsuario(String codigoValidacion) {
-		Gson oG = new Gson();
+		this.og = new Gson();
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);
+			this.s = new Socket (this.serverIp,  this.serverPort);
 			BufferedReader canalIn = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			PrintWriter canalOut = new PrintWriter (s.getOutputStream(), true);
+			
 			op.setTipo("7");
 			op.setCodigoValidacion(codigoValidacion);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalOut.println(json);
 			canalOut.flush();
 			
 			json = canalIn.readLine();//leo la rta
+			this.s.close();
 			return json;
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -275,17 +282,19 @@ public String validarUsuario(String usuario) {//valida q el usuario a registrar 
 
 	public String registrar(String usuario, String passwd, String numTarjeta, String codigo,int mes, int anno) {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);
+			this.s = new Socket (this.serverIp,  this.serverPort);
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
-			Gson oG = new Gson();
+			
+			this.og = new Gson();
 			this.op.setTipo("8");
 			this.op.setCrearUsuario(usuario,passwd,numTarjeta,codigo,mes,anno);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			
 			json = canalEntrada.readLine();
+			this.s.close();
 			return json;
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
@@ -298,20 +307,22 @@ public String validarUsuario(String usuario) {//valida q el usuario a registrar 
 	
 	
 	
-	
+	//
 	public String confirmarPassword(String pass) {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);
+			this.s = new Socket (this.serverIp,  this.serverPort);
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
-			Gson oG = new Gson();
+			
+			this.og = new Gson();
 			this.op.setTipo("9");
 			this.op.setPsw(pass);
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			
 			json = canalEntrada.readLine();
+			this.s.close();
 			return json;
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
@@ -325,29 +336,25 @@ public String validarUsuario(String usuario) {//valida q el usuario a registrar 
 	
 	public String getCBU() {
 		try {
-			this.s = new Socket ("127.0.0.1", 9000);//establecemos coneccion
+			this.s = new Socket (this.serverIp, this.serverPort);//establecemos coneccion
 			this.canalEntrada = new BufferedReader (new InputStreamReader (s.getInputStream()));
 			this.canalSalida = new PrintWriter (s.getOutputStream(), true);
 			
-			Gson oG = new Gson();
+			this.og = new Gson();
 			this.op.setTipo("12");
-			String json = oG.toJson(op);
+			String json = this.og.toJson(op);
 			canalSalida.println(json);
 			canalSalida.flush();
 			json = canalEntrada.readLine();
+			this.s.close();
+			
 			return json;
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
-
-
-
-
-	
-
 	
 
 

@@ -41,43 +41,44 @@ public class VistaIniSesion extends JPanel implements ActionListener ,WindowList
 	        frame.setLocation(x, y);
 	        this.frame.addWindowListener(this);
 	   	 
-		      //construct components
-		      btnAtras = new JButton ("Atras");
-		      btnAtras.addActionListener(this);
-		      btnIniSesion = new JButton ("Iniciar Sesion");
-		      btnIniSesion.addActionListener(this);
-		      usuario =  new JFormattedTextField();
-	          eUsuario = new JLabel("Usuario: ");
-	          ePasswd = new JLabel("Passwd: ");
-	          password = new JPasswordField();
+	        //construct components
+	        btnAtras = new JButton ("Atras");
+		    btnAtras.addActionListener(this);
+		    btnIniSesion = new JButton ("Iniciar Sesion");
+		    btnIniSesion.addActionListener(this);
+		    usuario =  new JFormattedTextField();
+	        eUsuario = new JLabel("Usuario: ");
+	        ePasswd = new JLabel("Passwd: ");
+	        password = new JPasswordField();
 
-		      //adjust size and set layout
-		      setPreferredSize (new Dimension (372, 266));
-		      setLayout (null);
-		      //add components
-		      add (btnAtras);
-		      add (btnIniSesion);
-		      add (eUsuario);
-		      add (usuario);
-		      add (ePasswd);
-		      add (password);
+		    //adjust size and set layout
+		    setPreferredSize (new Dimension (372, 266));
+		    setLayout (null);
+		    //add components
+		    add (btnAtras);
+		    add (btnIniSesion);
+		    add (eUsuario);
+		    add (usuario);
+		    add (ePasswd);
+		    add (password);
 		    
-		      //set component bounds (only needed by Absolute Positioning)
-		      btnAtras.setBounds(40, 130, 80, 30);
-		      btnIniSesion.setBounds (170, 130, 130, 30);
+		    
+		    btnAtras.setBounds(40, 130, 130, 30);
+		    btnIniSesion.setBounds (210, 130, 130, 30);
 		      
-		      usuario.setBounds (80, 50, 200, 25);
-		      password.setBounds (80, 75, 200, 25);
+		    usuario.setBounds (100, 50, 230, 25);
+		    password.setBounds (100, 75, 230, 25);
 		      
-		      eUsuario.setBounds (15, 50, 170, 25);
-		      ePasswd.setBounds (15, 75, 170, 25);
+		    eUsuario.setBounds (35, 50, 170, 25);
+		    ePasswd.setBounds (35, 75, 170, 25);
 		      
 		      
-		      frame.getContentPane().add(this);
-		      frame.pack();
-		      frame.setVisible (true);
+		    frame.getContentPane().add(this);
+		    frame.pack();
+		    frame.setVisible (true);
 
 		}
+		
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -93,7 +94,6 @@ public class VistaIniSesion extends JPanel implements ActionListener ,WindowList
 					 if(!passwdorOK(this.password).isEmpty()) {// si no esta vacio el campo password 
 						//verificamos que el usuario y contraseña sean correctos y ademas q no este loggeado
 						 String rta = this.controlador.iniciarSesion(this.usuario.getText(),passwdorOK(this.password));
-						 System.out.println(rta);
 						 if(rta.equals("OK")) {
 							 this.frame.setVisible(false);
 							 new VistaTareas(controlador);
@@ -120,6 +120,10 @@ public class VistaIniSesion extends JPanel implements ActionListener ,WindowList
 			 
 
 	}
+		
+		
+		
+		
 
 		private String passwdorOK(JPasswordField password) {
 			String pass = "";
@@ -178,9 +182,11 @@ public class VistaIniSesion extends JPanel implements ActionListener ,WindowList
 			int valor = JOptionPane.showConfirmDialog(this,"¿Esta seguro de querer cerrar la aplicacion?","Advertencia",JOptionPane.YES_NO_OPTION);
 			if(valor == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "Cerrando aplicacion");
+				this.controlador.closeConeccion();
 				System.exit(0);
 			}else {
 				new VistaIniSesion(this.controlador);
 			}
 		}
+		
 }

@@ -33,28 +33,28 @@ public class VistaInicial extends JPanel implements ActionListener, WindowListen
 	        frame.setLocation(x, y);
 	        this.frame.addWindowListener(this);
 	   	 
-		      //construct components
-		      btnRegistrar = new JButton ("Registarse");
-		      btnRegistrar.addActionListener(this);
-		      btnIniSesion = new JButton ("Iniciar Sesion");
-		      btnIniSesion.addActionListener(this);
+		    //construct components
+		    btnRegistrar = new JButton ("Registarse");
+		    btnRegistrar.addActionListener(this);
+		    btnIniSesion = new JButton ("Iniciar Sesion");
+		    btnIniSesion.addActionListener(this);
 		    
 
-		      //adjust size and set layout
-		      setPreferredSize (new Dimension (372, 266));
-		      setLayout (null);
-		      //add components
-		      add (btnRegistrar);
-		      add (btnIniSesion);
+		    //adjust size and set layout
+		    setPreferredSize (new Dimension (372, 266));
+		    setLayout (null);
+		    //add components
+		    add (btnRegistrar);
+		    add (btnIniSesion);
 		    
-		      //set component bounds (only needed by Absolute Positioning)
-		      btnRegistrar.setBounds (100, 100, 180, 40);
-		      btnIniSesion.setBounds (100, 150, 180, 40);
+		    
+		    btnRegistrar.setBounds (100, 70, 180, 40);
+		    btnIniSesion.setBounds (100, 150, 180, 40);
+		    
 		      
-		      
-		      frame.getContentPane().add(this);
-		      frame.pack();
-		      frame.setVisible (true);
+		    frame.getContentPane().add(this);
+		    frame.pack();
+		    frame.setVisible (true);
 
 		}
 		
@@ -121,6 +121,7 @@ public class VistaInicial extends JPanel implements ActionListener, WindowListen
 			int valor = JOptionPane.showConfirmDialog(this,"¿Esta seguro de querer cerrar la aplicacion?","Advertencia",JOptionPane.YES_NO_OPTION);
 			if(valor == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "Cerrando aplicacion");
+				this.controlador.closeConeccion();
 				System.exit(1);
 			}else {
 				new VistaInicial(this.controlador);

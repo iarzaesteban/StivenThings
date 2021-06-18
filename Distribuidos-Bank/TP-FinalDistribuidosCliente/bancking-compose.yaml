@@ -1,10 +1,12 @@
 version: '3'
 services: 
-       
-
-    bancking-container:
-        image: banckington-image:latest
-        container_name: bancking-app
-        ports:
-            - 9000:9000
+  cliente:
+    image: cliente:latest
+    container_name: cliente
+    environment:
+      - DISPLAY=192.168.0.12:0
+    volumes:
+      - C:\Users\Esteban:\Esteban  
+    ports:
+      - 22222:22222
     

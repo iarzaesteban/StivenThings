@@ -1,0 +1,5 @@
+453  [main] ERROR Servidor.RabbitTailWorker - Cannot invoke "Object.toString()" because "this.transaccion" is null
+456  [main] ERROR Servidor.RabbitTailWorker - Cannot invoke "Object.toString()" because "this.transaccion" is null
+453  [main] ERROR Servidor.RabbitTailWorker - Cannot invoke "Object.toString()" because "this.transaccion" is null
+465  [main] ERROR Servidor.RabbitTailWorker - Cannot invoke "Object.toString()" because "this.transaccion" is null
+502  [main] ERROR Servidor.RabbitTailWorker - Cannot invoke "Object.toString()" because "this.transaccion" is null

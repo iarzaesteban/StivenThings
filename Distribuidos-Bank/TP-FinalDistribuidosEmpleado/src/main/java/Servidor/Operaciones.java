@@ -39,7 +39,7 @@ public class Operaciones implements Serializable {
 	ArrayList<String> localidades;
 	ArrayList<String> tiposTarjeta;
 	
-	ArrayList<Transaccion> aT = null;
+	//ArrayList<Transaccion> aT = null;
 	
 	
 	
@@ -68,7 +68,7 @@ public class Operaciones implements Serializable {
 		this.empleado_id = "";
 		this.codigoValidacion = "";
 		this.tiposTarjeta = new ArrayList<>();
-		this.aT = new ArrayList<Transaccion>();
+		//this.aT = new ArrayList<Transaccion>();
 		
 	}
 	
@@ -362,7 +362,7 @@ public class Operaciones implements Serializable {
 		this.nombreUsuario = nombreUsuario;
 	}
 	
-	public ArrayList<Transaccion> getaT() {
+	/*public ArrayList<Transaccion> getaT() {
 		return aT;
 	}
 	
@@ -370,7 +370,7 @@ public class Operaciones implements Serializable {
 	public void agregarTransaccion(Transaccion t) {
 		this.aT = new ArrayList<Transaccion>();
 		this.aT.add(t);
-	}
+	}*/
 	
 	
 	public String getPasswdTow() {

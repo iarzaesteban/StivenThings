@@ -1,0 +1,13 @@
+Client\Cliente.class
+VistasCliente\VistaTransferencia.class
+VistasCliente\VistaIniSesion.class
+Client\ClienteEjecutable.class
+VistasCliente\VistaInicial.class
+Servidor\Operaciones.class
+VistasCliente\VistaRegistar.class
+VistasCliente\VistaConsultas.class
+VistasCliente\VistaPagos.class
+VistasCliente\VistaTareas.class
+Controlador\Controlador.class
+VistasCliente\VistaConfirmar.class
+Servidor\Transaccion.class

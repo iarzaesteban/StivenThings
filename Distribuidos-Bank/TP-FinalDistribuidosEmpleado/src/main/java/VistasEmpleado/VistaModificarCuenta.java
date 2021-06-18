@@ -10,7 +10,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.beans.PropertyChangeEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JDateChooser;
 
 import Controlador.ControladorEmpleado;
 
@@ -48,6 +54,9 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 	  private JTextField textProvinia;
 	  private JTextField textFechaDeNacimiento;
 	  private JTextField textEmail;
+	  
+	  
+	  private JDateChooser calendario;
 	  
 	  private JComboBox<String> Bprovincia ;
 	  private JComboBox<String> Blocalidad;
@@ -98,7 +107,8 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 	        Bprovincia = new JComboBox<String>();
 	        Blocalidad = new JComboBox<String>();
 	        	
-	        	
+	        calendario = new JDateChooser();
+	        
 	        textProvinia.addMouseListener(this); 
 	        textLoc.addMouseListener(this); 
 		      //adjust size and set layout
@@ -130,6 +140,8 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 		      add (textDireccion);
 		      add (textFechaDeNacimiento);
 		      add (textEmail);
+		      
+		      add (calendario);
 		      
 		      add (Bprovincia);
 		      add (Blocalidad);
@@ -164,8 +176,10 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 		      Bprovincia.setBounds(85,150,200,25);
 		      Blocalidad.setBounds(85,175,200,25);
 		      textDireccion.setBounds(85,200,200,25);
-		      textFechaDeNacimiento.setBounds(85,225,200,25);
+		      textFechaDeNacimiento.setBounds(85,225,177,25);
 		      textEmail.setBounds(85,250,200,25);
+		      
+		      calendario.setBounds(255,225,30,25);
 		      
 		      activarParte1();
 		      
@@ -179,6 +193,13 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 		            	mostrarLocalidades(event.getItem().toString());
 		            }
 		        });
+		      
+		      calendario.addPropertyChangeListener(
+		    		  (PropertyChangeEvent e) -> {
+		    			  if ("date".equals(e.getPropertyName())) {
+		    				  setModificarFecha(calendario);
+		    			  }
+		      });
 		      
 		}
 		
@@ -269,6 +290,7 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 		    btnModificar.setEnabled(false);
 		    Bprovincia.setEnabled(false);
 		    Blocalidad.setEnabled(false);
+		    calendario.setEnabled(false);
 		}
 		
 		
@@ -294,6 +316,7 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 			 textFechaDeNacimiento.setText(this.controlador.getFechaNac());
 			 textEmail.setText(this.controlador.getEmail());
 			 btnValidarDni.setEnabled(false);
+			 calendario.setEnabled(true);
 			 
 		}
 
@@ -313,6 +336,15 @@ public class VistaModificarCuenta extends JPanel implements ActionListener ,Wind
 				 Blocalidad.addItem(localidades.get(i));
 				 i++;
 			 }
+		}
+		 
+		 
+		private void setModificarFecha(JDateChooser calendar) {
+			String formatoFecha = "yyyy-MM-dd";
+			DateFormat formato = new SimpleDateFormat(formatoFecha,Locale.US);
+			String fecha = formato.format(calendario.getDate());//imput
+			
+			textFechaDeNacimiento.setText(fecha);
 		}
 		 
 		//dni, cuil, telefono

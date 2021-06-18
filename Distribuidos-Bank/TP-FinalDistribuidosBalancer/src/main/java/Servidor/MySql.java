@@ -2,6 +2,8 @@ package Servidor;
 
 import java.io.IOException;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,8 +15,10 @@ public class MySql {
 	String url;
 	String password;
 	String username;
-	java.sql.Connection conex;
+	
+	java.sql.Connection conection;
 	Statement st;
+	PreparedStatement pStatement;
 	
 	public MySql () {
 	}
@@ -22,7 +26,7 @@ public class MySql {
 	protected void closeConnection(){
 		try {
 			this.st.close();
-			this.conex.close();
+			this.conection.close();
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 		}
@@ -32,26 +36,12 @@ public class MySql {
 	
 			try{
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				//this.conex = DriverManager.getConnection("jdbc:mysql://localhost:3306/Banckington","root","");
-				System.out.println("creando conexion db");
-				this.conex = DriverManager.getConnection("jdbc:mysql://mysql-app:3309/Banckington","root","root");
+				this.conection = DriverManager.getConnection("jdbc:mysql://192.168.0.10:3309/Banckington","root","root");
+				//this.conex = DriverManager.getConnection("jdbc:mysql://mysql:3309/Banckington","root","root");
 				
-				//	Class.forName("org.mariadb.jdbc.Driver");
-				//this.conex = DriverManager.getConnection("jdbc:mariadb://localhost:3308/Banckington","root","");
-				//Connection connection = (Connection) DriverManager.getConnection("jdbc:mariadb://localhost:3308/DB?user=pepe&password=123");
-	    		this.st = conex.createStatement();
-	    		System.out.println("conexion con db correcta");
+	    		this.st = conection.createStatement();
 	    		return true;
-    			/*if(conex != null) {
-    				System.out.println("conectado...");
-    				String query = "INSERT INTO datospersonales (id,nobre,apellido,edad) values(55,'marta','martinelli',79)";
-        			java.sql.Statement st = conex.createStatement();
-        			
-        			st.executeUpdate(query);
-        			
-        			//ResultSet resultado = st.executeQuery(query); // almacenara en resultado la consukta
-        			
-    			}*/
+    		
     			} catch (SQLException throwables) {
     				throwables.printStackTrace();
     			} catch (ClassNotFoundException e) {
@@ -61,10 +51,89 @@ public class MySql {
 	}
 	
 	
-	protected void ejecutarConsulta() {
-		
+	protected void prepararConsultaLogginEmpleado(String user,String password) {
+		try {
+			this.pStatement = this.conection.prepareStatement("select loggin from usuario where username = ? and password = ?");
+			this.pStatement.setString(1, user);
+			this.pStatement.setString(2, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void prepararConsultaLogginCliente(String user,String password) {
+		try {
+			this.pStatement = this.conection.prepareStatement("select dni,loggin from usuario where username = ? and password = ?");
+			this.pStatement.setString(1, user);
+			this.pStatement.setString(2, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void prepararConsultaUpdateLoggin(String dni) {
+		try {
+			this.pStatement = this.conection.prepareStatement("update usuario set loggin = 1 where dni  = ?");
+			this.pStatement.setString(1, dni);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	protected void prepararConsultaObtenerNombrePersona(String dni) {
+		try {
+			this.pStatement = this.conection.prepareStatement("select nombre from persona where dni = ?");
+			this.pStatement.setString(1, dni);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	protected ResultSet ejecutarQuery() {
+		try {
+			return this.pStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	protected int ejecutarUpdateQuery() {
+		try {
+			return this.pStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return (Integer) null;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void createStructure () {
 		this.createConnection();
 

@@ -1,0 +1,22 @@
+version: '3'
+services: 
+    bancking-container:
+        image: server-balancer:latest 
+        links: 
+            - mysql-app
+        container_name: server-balancer-1
+        ports:
+            - 9000:9000
+
+    mysql-app:
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - ./bankDB:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=Banckington
+        ports:
+            -  3309:3306 
+
+    

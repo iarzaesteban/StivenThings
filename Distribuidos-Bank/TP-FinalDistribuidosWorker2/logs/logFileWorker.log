@@ -1,0 +1,2 @@
+964  [AMQP Connection 192.168.0.12:5672] WARN  c.r.c.i.ForgivingExceptionHandler - An unexpected connection driver error occured (Exception message: Connection reset)
+965  [main] ERROR Servidor.RabbitTailWorker - ACCESS_REFUSED - Login was refused using authentication mechanism PLAIN. For details see the broker logfile.

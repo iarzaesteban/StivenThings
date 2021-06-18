@@ -68,13 +68,13 @@ public class Controlador{
 	}
 
 
-	public String validarTransaccion(String nroCta, String monto) {
-		return this.cliente.validarTransaccion(nroCta,monto);
+	public String validarTransaccion(String cbu, String monto,String tTransaccion) {
+		return this.cliente.validarTransaccion(cbu,monto,tTransaccion);
 	}
 	
 	
-	public String realizarTransferencia(String nroCta, String monto) {
-		return this.cliente.realizarTranferencia(nroCta,monto);
+	public String realizarTransferencia(String nroCbu, String monto,String tTransferencia,Long fecha) {
+		return this.cliente.realizarTranferencia(nroCbu,monto,tTransferencia,fecha);
 		
 	}
 

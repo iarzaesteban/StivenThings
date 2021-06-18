@@ -1,5 +1,6 @@
-FROM openjdk:latest
-COPY target/TP-Final-0.0.1-SNAPSHOT.jar app/serverBalancer.jar
-EXPOSE 9000
-CMD ["java","-jar","app/serverBalancer.jar"]
+FROM ubuntu:latest
+COPY target/TP-Final-0.0.1-SNAPSHOT.jar app/cliente.jar
+EXPOSE 17171
+RUN apt-get update && apt-get upgrade && apt-get install -y libxtst6 && apt-get install -y openjdk 
+CMD ["java","-jar","app/cliente.jar"]
 

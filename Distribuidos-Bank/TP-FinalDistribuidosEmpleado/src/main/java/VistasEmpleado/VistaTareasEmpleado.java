@@ -41,51 +41,48 @@ public class VistaTareasEmpleado extends JPanel implements ActionListener, Windo
 	        
 	        frame.addWindowListener(this);
 	   	 
-		      //construct components
-	        	btnSalir = new JButton ("Salir");
-	        	btnSalir.addActionListener(this);
-	        	btnSolicitarTarjeta = new JButton("Solicitar Tarjeta");
-	        	btnSolicitarTarjeta.addActionListener(this);
-	        	btnCrear = new JButton ("Crear Cuenta");
-	        	btnCrear.addActionListener(this);
-	        	btnModificar = new JButton ("Modificar cuenta");
-	        	btnModificar.addActionListener(this);
-	        	btnEliminar = new JButton ("Eliminar cuenta");
-	        	btnEliminar.addActionListener(this);
-	        	
-	        	eEmpleado = new JLabel("Empleado: " + this.controlador.getEmpleado());
+	        //construct components
+	       	btnSalir = new JButton ("Salir");
+	        btnSalir.addActionListener(this);
+	        btnSolicitarTarjeta = new JButton("Solicitar Tarjeta");
+	        btnSolicitarTarjeta.addActionListener(this);
+	        btnCrear = new JButton ("Crear Cuenta");
+	        btnCrear.addActionListener(this);
+	        btnModificar = new JButton ("Modificar cuenta");
+	        btnModificar.addActionListener(this);
+	        btnEliminar = new JButton ("Eliminar cuenta");
+	        btnEliminar.addActionListener(this);
+	        
+	        eEmpleado = new JLabel("Empleado: " + this.controlador.getEmpleado());
 		     
 
-		      //adjust size and set layout
-		      setPreferredSize (new Dimension (372, 266));
-		      setLayout (null);
+		    //adjust size and set layout
+		    setPreferredSize (new Dimension (372, 266));
+		    setLayout (null);
 		      
-		      //add components
-		      add (btnSalir);
-		      add (btnCrear);
-		      add (btnModificar);
-		      add (btnEliminar);
-		      add (btnSolicitarTarjeta);
-		      add (eEmpleado);
+		    //add components
+		    add (btnSalir);
+		    add (btnCrear);
+		    add (btnModificar);
+		    add (btnEliminar);
+		    add (btnSolicitarTarjeta);
+		    add (eEmpleado);
+		     
+		    //set component bounds (only needed by Absolute Positioning)
+		    btnSalir.setBounds(175, 145, 80, 30);
+		    btnSolicitarTarjeta.setBounds(65,100,170,25);
+		    btnCrear.setBounds (65, 25, 170, 25);
+		    btnModificar.setBounds (65, 50, 170, 25);
+		    btnEliminar.setBounds (65, 75, 170, 25);
 		      
-		      //set component bounds (only needed by Absolute Positioning)
-		      btnSalir.setBounds(175, 145, 80, 30);
-		      btnSolicitarTarjeta.setBounds(65,100,170,25);
-		      btnCrear.setBounds (65, 25, 170, 25);
-		      btnModificar.setBounds (65, 50, 170, 25);
-		      btnEliminar.setBounds (65, 75, 170, 25);
+		    eEmpleado.setBounds(235,200,150,30);
 		      
-		      eEmpleado.setBounds(235,200,150,30);
-		      
-		      frame.getContentPane().add(this);
-		      frame.pack();
-		      frame.setVisible (true);
+		    frame.getContentPane().add(this);
+		    frame.pack();
+		    frame.setVisible (true);
 
 		}
 
-		
-		
-		
 		
 		public void actionPerformed(ActionEvent e) {
 			

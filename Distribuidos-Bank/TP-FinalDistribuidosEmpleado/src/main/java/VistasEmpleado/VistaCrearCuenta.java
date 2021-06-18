@@ -279,10 +279,12 @@ public class VistaCrearCuenta extends JPanel implements ActionListener, WindowLi
 						String fecha = formato.format(calendario.getDate());//imput
 						String tel = textCodArea.getText() +"-"+ textTelefono.getText();
 						
-						if(this.controlador.crearCuentaConTarjeta(textDNI.getText(),textApellido.getText(),textNombre.getText(),textCuil.getText(), 
+						if(this.controlador.crearCuentaConTarjeta(textDNI.getText(),
+								textApellido.getText(),textNombre.getText(),textCuil.getText(), 
 									fecha,textDireccion.getText(),tel,textMail.getText(),
 									seleccionado(),provincia.getSelectedItem().toString(),
-									localidad.getSelectedItem().toString(),tipoTarjeta.getSelectedItem().toString()).equals("OK") ){
+									localidad.getSelectedItem().toString(),
+									tipoTarjeta.getSelectedItem().toString()).equals("OK") ){
 								
 							JOptionPane.showMessageDialog(null, "Cuenta creada con exito");
 							this.frame.setVisible(false);
@@ -503,7 +505,7 @@ public class VistaCrearCuenta extends JPanel implements ActionListener, WindowLi
 								 JOptionPane.showMessageDialog(null, "Codigo de Area incorrecto");
 							 }else {
 								 if(this.textCuil.getText().isEmpty() || !valdidarCUIL(textCuil.getText())) {
-									 JOptionPane.showMessageDialog(null, "Cuil incorrecto");
+									 JOptionPane.showMessageDialog(null, "Cuil incorrectooo");
 								 }else {
 									 if(this.textDireccion.getText().isEmpty()) {
 										 JOptionPane.showMessageDialog(null, "Direccion incorrecta");
@@ -572,13 +574,17 @@ public class VistaCrearCuenta extends JPanel implements ActionListener, WindowLi
 
 		//dni, cuil, telefono
 		private boolean validarNumerico(String cadena) {
-				double nro;
-				try {
-					nro = Integer.parseInt(cadena);
-					return true;
+			boolean rta = false;
+			double nro;
+			try {	
+				System.out.println("Validamos rta");
+				nro = Long.parseLong(cadena);
+				rta = true;
 				}catch(Exception e) {
+					System.out.println("Tiro erros");
 					return false;
 				}
+			return rta;
 		 }
 		 
 		
@@ -587,54 +593,61 @@ public class VistaCrearCuenta extends JPanel implements ActionListener, WindowLi
 			int codigoVer = -1;
 			int[] mult_cuil = null;
 			try {
-				String parte1 = cadena.substring(0, 5);
-				String parte2 = cadena.substring(5, 11);
-				nro = Integer.parseInt(parte1);
-				nro = Integer.parseInt(parte2);
-				if((cadena.length() == 11) || (cadena.length() == 10)) {
-					if(cadena.length() == 10) {
-						codigoVer = Integer.parseInt(cadena.substring(9, 10));
-						mult_cuil = new int[9];
-						mult_cuil[0] = 5;
-						mult_cuil[1] = 4;
-						mult_cuil[2] = 3;
-						mult_cuil[3] = 2;
-						mult_cuil[4] = 7;
-						mult_cuil[5] = 6;
-						mult_cuil[6] = 5;
-						mult_cuil[7] = 4;
-						mult_cuil[8] = 3;
-					}else {
-						codigoVer = Integer.parseInt(cadena.substring(10, 11));
-						mult_cuil = new int[10];
-						mult_cuil[0] = 5;
-						mult_cuil[1] = 4;
-						mult_cuil[2] = 3;
-						mult_cuil[3] = 2;
-						mult_cuil[4] = 7;
-						mult_cuil[5] = 6;
-						mult_cuil[6] = 5;
-						mult_cuil[7] = 4;
-						mult_cuil[8] = 3;
-						mult_cuil[9] = 2;
+				if(validarNumerico(cadena)) {	
+					String parte1 = cadena.substring(0, 5);
+					String parte2 = cadena.substring(5, 11);
+					nro = Integer.parseInt(parte1);
+					nro = Integer.parseInt(parte2);
+					if((cadena.length() == 11) || (cadena.length() == 10)) {
+						System.out.println("es 11 o 10 ");
+						if(cadena.length() == 10) {
+							codigoVer = Integer.parseInt(cadena.substring(9, 10));
+							mult_cuil = new int[9];
+							mult_cuil[0] = 5;
+							mult_cuil[1] = 4;
+							mult_cuil[2] = 3;
+							mult_cuil[3] = 2;
+							mult_cuil[4] = 7;
+							mult_cuil[5] = 6;
+							mult_cuil[6] = 5;
+							mult_cuil[7] = 4;
+							mult_cuil[8] = 3;
+						}else {
+							System.out.println("es un cuil de 11" );
+							codigoVer = Integer.parseInt(cadena.substring(10, 11));
+							mult_cuil = new int[10];
+							mult_cuil[0] = 5;
+							mult_cuil[1] = 4;
+							mult_cuil[2] = 3;
+							mult_cuil[3] = 2;
+							mult_cuil[4] = 7;
+							mult_cuil[5] = 6;
+							mult_cuil[6] = 5;
+							mult_cuil[7] = 4;
+							mult_cuil[8] = 3;
+							mult_cuil[9] = 2;
+						}
+						int suma = 0;
+						for (int i = 0; i < 10; i++){
+							suma = suma + (Integer.parseInt(cadena.substring(i, i+1)) * mult_cuil[i]);
+						}
+						
+						suma = 11 - (suma % 11);
+						if ((suma == 11)) {
+							suma =0;
+						}
+						if ((suma == 10)) {
+							return false;
+						}
+						System.out.println(" suma " + suma + " codVer " + codigoVer);
+						if(suma == codigoVer) {
+							return true;
+						}else {
+							return false;
+						}
 					}
-					int suma = 0;
-					for (int i = 0; i < 10; i++){
-						suma = suma + (Integer.parseInt(cadena.substring(i, i+1)) * mult_cuil[i]);
-					}
-					
-					suma = 11 - (suma % 11);
-					if ((suma == 11)) {
-						suma =0;
-					}
-					if ((suma == 10)) {
-						return false;
-					}
-					if(suma == codigoVer) {
-						return true;
-					}else {
-						return false;
-					}
+				}else {
+					return false;
 				}
 				
 			}catch(Exception e) {

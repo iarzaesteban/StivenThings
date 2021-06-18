@@ -1,10 +1,10 @@
 package Controlador;
 
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-import Client.Cliente;
 import Empleado.Empleado;
 
 public class ControladorEmpleado {

@@ -192,26 +192,30 @@ public class VistaRegistar extends JPanel implements ActionListener ,WindowListe
 		
 		public void actionPerformed(ActionEvent e) {
 			
-			 if (e.getSource() == this.btnRegistrar) {
-				 boolean validar =  validarDatosRegistrar();
-				 if(validar) {		
-					 String valor = this.controlador.registrar(textNewUsuario.getText(),passwdorOK(textPasswd),textNumTarjeta.getText(),
+			//SI presiona registar, se creara un nuevo usuario.
+			if (e.getSource() == this.btnRegistrar) {
+				//MAndamos a verificar que esten todos los datos correctamente, que no haya campos en blanco, etc
+				boolean validar =  validarDatosRegistrar();
+				if(validar) {		
+					String valor = this.controlador.registrar(textNewUsuario.getText(),passwdorOK(textPasswd),textNumTarjeta.getText(),
 							 textCodigo.getText(),mes.getMonth(),anno.getYear());
-					 
-					 if(valor.equals("OK") ){
-						 JOptionPane.showMessageDialog(null, "Cuenta creada con exito"	);
-						 this.frame.setVisible(false);
-						 new VistaRegistar(this.controlador);
-					 }else {
-						 this.frame.setVisible(false);
-						 JOptionPane.showMessageDialog(null, valor);
-						 new VistaRegistar(this.controlador);
-					 }
+					// Si esta todo OK entonces notifiacamos que esta creado correctamente
+					if(valor.equals("OK") ){
+						JOptionPane.showMessageDialog(null, "Cuenta creada con exito"	);
+						this.frame.setVisible(false);
+						new VistaRegistar(this.controlador);
+					}else {
+						this.frame.setVisible(false);
+						JOptionPane.showMessageDialog(null, valor);
+						new VistaRegistar(this.controlador);
+					}
 						
 				}
-				 //partir el numero de tarjeta en partes y ver q sean todos numeros, dsp ver como hacer q el calendario solo eliha mes y año
+				//partir el numero de tarjeta en partes y ver q sean todos numeros, dsp ver como hacer q el calendario solo eliha mes y año
 			 }
 			 
+			 
+			 //Si presiona atras, volvemos a la pantalla inicial
 			 if (e.getSource() == this.btnAtras) {
 				 this.frame.setVisible(false);
 				 new VistaInicial(this.controlador);
@@ -219,31 +223,10 @@ public class VistaRegistar extends JPanel implements ActionListener ,WindowListe
 			 
 			 
 			 
-			 if (e.getSource() == this.btnValidarCodigo) {
-				 if(!textCodigoValidacion.getText().isEmpty() && validarNumerico(textCodigoValidacion.getText())) {
-					 String rta = this.controlador.validarCodigoUsuario(textCodigoValidacion.getText());
-					 System.out.println("rta es " + rta);
-					 if(rta.equals("OK")) {
-						 btnValidarCodigo.setBackground(Color.green);
-						 JOptionPane.showMessageDialog(null, "El codigo ingrsado es CORRECTO, continue para registrarse");
-						 activarParte3();
-					 }else {
-						 btnValidarCodigo.setBackground(Color.red);
-						 JOptionPane.showMessageDialog(null, "El codigo ingrsado es INCORRECTO");
-						 btnValidarCodigo.setBackground(Color.white);
-						 
-					 }
-				 }else {
-					 btnValidarCodigo.setBackground(Color.red);
-					 JOptionPane.showMessageDialog(null, "El codigo ingrsado es INCORRECTO");
-					 btnValidarCodigo.setBackground(Color.white);
-				 }
-				 
-			 }
 			
 			 
 			 
-			 
+			 //ingresa usuario para ver que se pueda registar...
 			 if (e.getSource() == this.btnValidar) {
 				 
 				 if(!textUsuario.getText().isEmpty() && validarUsuario(textUsuario.getText())) {
@@ -267,12 +250,34 @@ public class VistaRegistar extends JPanel implements ActionListener ,WindowListe
 				}
 			 }
 			 
+			 
+			 
+			 
+			// Ingresa el codigo que se le fue enviado por mail para corroborar q sea el propietario
+			 if (e.getSource() == this.btnValidarCodigo) {
+				 if(!textCodigoValidacion.getText().isEmpty() && validarNumerico(textCodigoValidacion.getText())) {
+					 String rta = this.controlador.validarCodigoUsuario(textCodigoValidacion.getText());
+					 System.out.println("rta es " + rta);
+					 if(rta.equals("OK")) {
+						 btnValidarCodigo.setBackground(Color.green);
+						 JOptionPane.showMessageDialog(null, "El codigo ingrsado es CORRECTO, continue para registrarse");
+						 activarParte3();
+					 }else {
+						 btnValidarCodigo.setBackground(Color.red);
+						 JOptionPane.showMessageDialog(null, "El codigo ingrsado es INCORRECTO");
+						 btnValidarCodigo.setBackground(Color.white);
+						 
+					 }
+				 }else {
+					 btnValidarCodigo.setBackground(Color.red);
+					 JOptionPane.showMessageDialog(null, "El codigo ingrsado es INCORRECTO");
+					 btnValidarCodigo.setBackground(Color.white);
+				 }
+				 
+			 }
 			
-			 
-			 
-			 
 
-	}
+	} // cierro los listener
 		
 		
 		
